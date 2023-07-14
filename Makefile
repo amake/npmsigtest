@@ -14,7 +14,13 @@ endef
 $(foreach _,$(variants),$(eval $(call build_one,$(_))))
 
 .PHONY: test
-test: $(foreach _,$(variants),test-$(_))
+test: test-local $(foreach _,$(variants),test-$(_))
+
+.PHONY: test-local
+test-local:
+	npm run start & \
+	sleep 3 && \
+	kill -s TERM $$!
 
 define test_one
   .PHONY: test-$(1)
