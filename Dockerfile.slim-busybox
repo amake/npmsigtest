@@ -1,0 +1,10 @@
+FROM node:18.16.0-slim
+
+WORKDIR /usr/src/app
+COPY index.js package.json /usr/src/app/
+COPY bbshell /usr/bin/
+
+RUN apt update && apt install busybox && npm config set script-shell=bbshell
+
+CMD ["npm", "run", "start"]
+# CMD ["node", "index.js"]
